@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PauseChamp</title>
+  <link rel="stylesheet" href="Core.css" />
+  <link rel="stylesheet" href="PauseChamp.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+  <a href="menu.html" class = "bigHover" id = "BangGames">BangGames</a>
+  <h1></h1>
+  <div id = Play class = "play-button" >
+    <button type="button" id="PlayButton" class="bigHover">Play!</button>
+  </div>
+  <div id = SentenceDiv class = "SentenceDiv">
+    <label for="Sentence">Target sentence</label>
+    <textarea  type="text"  id="Sentence" name="Sentence" rows="1"></textarea>
+  </div>
+  <div id = Progress class = "Progress">
+  </div>
+    <div class="pull-out-buttons">
+        <button class="pull-out bigHover" id="howToPlay">How to play</button>
+        <button class="pull-out bigHover" id="otherGames">Other Games</button>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" id="closeButton">&times;</a>
+        <div id = "howToPlayText" class="howToPlayText">
+            <span class="Purple">Streamer:</span>  <br><br> <span class="Purple">Chat</span>: You can shoot at the bunny by writing shoot then either left, right, top or bottom and then a number from 0 to 100 to decide how far along the line to shoot.<br> "shoot left 50" will shoot from the middle of the left side.
+        </div>
+        <div id = "otherGamesDiv" class="otherGamesDiv">
+        <a href="menu.html" class = "bigHover">Menu</a>
+        <a href="favouriteWord.html" class = "bigHover">PogChamp</a>
+        <a href="caught.html" class = "bigHover">Caught</a>
+        <a href="KKona.html" class = "bigHover">KKona</a>
+        </div>
+    </div>
+    <div id = Loser class = "Loser">
+        This guy lost it!
+    </div>
+    <div id = GuessDiv class = "form-group">
+        <input type="text" id="FakeText" name="FakeText">
+    </div>
+  <script src="PauseChamp.js" type="module"></script>
+  <script src="Core.js" type="module"></script>
+</body>
+</html>

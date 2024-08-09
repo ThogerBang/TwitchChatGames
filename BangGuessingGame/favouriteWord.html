@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PogChamp</title>
+  <link rel="stylesheet" href="Core.css" />
+  <link rel="stylesheet" href="favouriteWord.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+  <a href="menu.html" class = "bigHover" id = "BangGames">BangGames</a>
+  <h1> Guess Chat's favourite word</h1>
+  <div id = Play class = "play-button">
+    <button type="button" id="PlayButton">Play!</button>
+    
+  </div>
+    <div id = GuessDiv class = "form-group">
+      <label for="Guess">Guess:</label>
+      <input type="text" id="Guess" name="Guess" placeholder="Rigged">
+      <span class="icon" ><i class="fas fa-eye" id="Eye"></i></span>
+      
+    </div>
+  
+  
+  <div id = winText class = winText>
+  </div>
+  <table class = "podium" id = "podium">
+    <tr>
+      <th style="width:100%;  text-align: middle;" colspan="2">Chat's favourite words</th>
+    </tr>
+    <tr>
+      <th>1.</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2.</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3.</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4.</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>5.</th>
+      <td></td>
+    </tr>
+  </table>
+  <div class="pull-out-buttons">
+    <button class="pull-out bigHover" id="howToPlay">How to play</button>
+    <button class="pull-out bigHover" id="otherGames">Other Games</button>
+</div>
+<div class="sidebar" id="sidebar">
+    <a href="javascript:void(0)" class="closebtn" id="closeButton">&times;</a>
+    <div id = "howToPlayText" class="howToPlayText">
+        <span class="Purple">Streamer:</span>  <br><br> <span class="Purple">Chat</span>: You can shoot at the bunny by writing shoot then either left, right, top or bottom and then a number from 0 to 100 to decide how far along the line to shoot.<br> "shoot left 50" will shoot from the middle of the left side.
+    </div>
+    <div id = "otherGamesDiv" class="otherGamesDiv">
+    <a href="menu.html" class = "bigHover">Menu</a>
+    <a href="favouriteWord.html" class = "bigHover">PogChamp</a>
+    <a href="caught.html" class = "bigHover">Caught</a>
+    <a href="KKona.html" class = "bigHover">KKona</a>
+    </div>
+</div>
+  <script src="favouriteWord.js" type="module"></script>
+  <script src="Core.js" type="module"></script>
+</body>
+</html>

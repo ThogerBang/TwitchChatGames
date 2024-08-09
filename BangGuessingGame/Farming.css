@@ -1,0 +1,69 @@
+html {
+    min-height:100vh !important;
+    height: 100%;
+}
+body {
+    background-color: #e8f8ff; /* Set your desired background color */
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents scrollbars from appearing */
+    height: 100%;
+}
+.play-button {
+    margin-left: 45%;
+    z-index: 2;
+}
+.play-button button {
+    font-size: 50px;
+    z-index: 2;
+
+}
+.tasks{
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    margin: 0px;
+    transform: translate(-50%, -50%);
+}
+.task img{
+    margin-left: 15%;
+    width: 70%;
+}
+.task input{
+    margin-left: 13%;
+    width: 70%;
+    z-index: 1;
+}
+.task{
+    width: 25%;
+    height: 35%;
+    margin: 0px;
+    z-index: 3;
+}
+.chickens{
+    position: absolute;
+    top: 8%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+.wheat{
+    position: relative;
+    top: 8%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+}
+.errorText{
+    margin-top: 5px;
+    margin-left: 13%;
+    width: 70%;
+    z-index: 1;
+    font-size: 15px;
+    color: #ef2424;
+}
+.Green{
+    color: #3ad244;
+}
+.Red{
+    color: #ef2424;
+}

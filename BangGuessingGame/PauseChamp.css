@@ -1,0 +1,60 @@
+body {
+    background-color: #e8f8ff; /* Set your desired background color */
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents scrollbars from appearing */
+}
+.play-button {
+    margin-left: 45%;
+
+}
+.play-button button {
+    font-size: 50px;
+
+}
+.SentenceDiv label {
+    display: block;
+    margin-bottom: 0em;
+    text-align: left;
+}
+.SentenceDiv {
+    position: relative;
+    margin-bottom: 1em;
+    margin-left: 15%;
+    font-size: 20px;
+}
+
+.SentenceDiv textarea {
+    height: auto;
+    line-height: 1;
+    font-size: 35px;
+    width: 70%;
+    min-height: 50px;
+    overflow: hidden;
+    resize: none; /* Prevent manual resizing */
+}
+.Progress {
+    position: relative;
+    top: 50%;
+    font-weight: bold;
+    margin-left: 0%;
+    text-align: center;
+    font-size: 35px;
+}
+.Loser {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 20%;
+    left: 0%;
+    font-weight: bold;
+    text-align: center;
+    font-size: 100px;
+    z-index: 5;
+}
+.Green{
+    color: #3ad244;
+}
+.Red{
+    color: #ef2424;
+}

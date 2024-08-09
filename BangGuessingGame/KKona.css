@@ -1,0 +1,90 @@
+body {
+    position: relative;
+    background-color: #e8f8ff; /* Set your desired background color */
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents scrollbars from appearing */
+    height: 100%;
+}
+.container {
+    position: relative;
+    height: 100vh; /* Full height of the viewport */
+    border: 1px solid black; /* Just to visualize the container */
+}
+h1{
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    margin: 0px;
+    transform: translate(-50%, -50%);
+}
+.play-button {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin: 0px;
+    transform: translate(-50%, -50%);
+
+}
+.play-button button {
+    font-size: 50px;
+
+}
+.timer {
+    font-size: 30px;
+    text-align: middle;
+    position: absolute;
+    top: 20vh;
+    left: 28%;
+    margin: 0px;
+    transform: translate(-50%, -50%);
+}
+.GameBox {
+    position: fixed;
+    width: 50vw; 
+    height: 50vh;
+    border: 2px solid black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.Bunny {
+    pointer-events: none; 
+    position: absolute;
+    width: 5%; 
+}
+.MovingBoxHor {
+    width: 2%;
+    padding-bottom:2%;
+    position: absolute;
+    background-color: black;
+}
+.MovingBoxVer {
+    width: 2%;
+    padding-bottom:2%;
+    position: absolute;
+    background-color: black;
+}
+
+@keyframes moveBoxright {
+    0% { left: calc(100% - 20px); }
+    100% { left: 0; }
+}
+@keyframes moveBoxleft {
+    0% { left: 0; }
+    100% { left: calc(100% - 20px); }
+}
+@keyframes moveBoxtop {
+    0% { top: 0; }
+    100% { top: calc(100% - 20px); }
+}
+@keyframes moveBoxbottom {
+    0% { top: calc(100% - 20px); }
+    100% { top: 0; }
+}
+
+.bigHover {
+    transition: transform 0.3s ease;
+}
+.bigHover:hover {
+    transform: scale(1.1); /* Scale the button to 1.2 times its original size */
+}
