@@ -18,7 +18,7 @@ const winText = document.getElementById('winText');
 const podium = document.getElementById('podium');
 const rows = podium.getElementsByTagName('tr');
 
-
+var channel;
 
 
   
@@ -43,14 +43,13 @@ document.getElementById("Eye").onclick = function() {
 
 PlayButton.onclick = function() {
   console.log("play button was clicked");
-  
   restart();
 };
 
 socket.addEventListener('open', (event) => {
     socket.send(`PASS oauth:${oAuth}`);
     socket.send(`NICK ${nick}`);
-    let channel = sessionStorage.getItem('channel')
+    channel = sessionStorage.getItem('channel')
     if (channel===null || channel === ""){
       winText.innerHTML = "you forgot to write a channel name!";
     }
@@ -159,6 +158,7 @@ socket.addEventListener('open', (event) => {
       console.log("U lose");
     }
   function restart() {
+    
     if (channel !== null && channel !== ""){
     winText.innerHTML = ""
     words = [];
