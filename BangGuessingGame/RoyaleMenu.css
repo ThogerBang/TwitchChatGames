@@ -1,0 +1,27 @@
+html {
+    min-height:100vh !important;
+    height: 100%;
+}
+body {
+    background-color: #e8f8ff; /* Set your desired background color */
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Prevents scrollbars from appearing */
+    height: 100%;
+}
+.play-button {
+    text-align: center;
+    z-index: 2;
+}
+.play-button button {
+    font-size: 50px;
+    z-index: 2;
+
+}
+.JoinText {
+    font-size: 50px;
+    text-align: center;
+}
+.bigText {
+    font-size: 50px;
+    text-align: center;
+}
