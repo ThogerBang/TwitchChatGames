@@ -3,19 +3,28 @@ const socket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
 const oAuth = "bbxuasj3p1vaid6o0h2oye3lvnwh3n";
 const nick = "bang";
 
+const AddThøgers = document.getElementById('AddThøgers');
 const PickPlayersButton = document.getElementById('PickPlayersButton');
+const ResetButton = document.getElementById('Reset');
 const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
 const JoinText = document.getElementById('JoinText');
+const PlayerArea = document.getElementById('PlayerArea');
 
-const JoinOptions = ["Put me in coach!", "I'm that guy!", "Let's rumble big dog!"];
+const JoinOptions = ["Put me in coach!", "I'm that guy!", "Let's rumble big dog!", "I will sacrifice myself to the old gods"];
 
-const JoinMessage = JoinOptions[Math.floor(Math.random() * (JoinOptions.length))];
 var isPlaying = false;
 var wantToJoin = [];
 var players = [];
-JoinText.innerHTML = "Type: \"" + JoinMessage +"\" To Join";
+var currentlyDisplaying = 0;
+var gameCapacity = 100;
+
+let HexLetters = "0123456789ABCDEF";
+
+JoinText.innerHTML = "Type: \"" + JoinOptions[Math.floor(Math.random() * (JoinOptions.length))] +"\" To Join";
 //"Type: <br />\"" + JoinMessage +"\"<br />To Join";
+
+const myInterval = setInterval(displayPlayer, 100);
 
 socket.addEventListener('open', (event) => {
     socket.send(`PASS oauth:${oAuth}`);
@@ -50,31 +59,60 @@ function handleMessage(user, message){
     if (!wantToJoin.includes(user)){
         if(message === JoinMessage){
             wantToJoin.push(user);
-            console.log(user + ", " + wantToJoin.length);
+            //console.log(user + ", " + wantToJoin.length);
         }
     }
 }
 
 function reset(){
     isPlaying = false;
-    PlayButton.style.display = "block";
 }
 
 PickPlayersButton.onclick = function() {
     this.blur();
     pickPlayers();
+    PickPlayersButton.style.display = "none";
     
+};
+ResetButton.onclick = function() {
+    isPlaying = false;
+    this.blur();
+    PickPlayersButton.style.display = "inline";
+    PlayerArea.innerHTML = "";
+    players = [];
+    wantToJoin = [];
+    JoinText.innerHTML = "Type: \"" + JoinOptions[Math.floor(Math.random() * (JoinOptions.length))] +"\" To Join";
+};
+AddThøgers.onclick = function() {
+    for(let i = 0; i < 200; i++){
+        handleMessage("ThogerBang"+i,JoinMessage);
+    }
 };
 
 function pickPlayers() {
-    PickPlayersButton.style.display = "none";
-    while(wantToJoin.length > 0 && players.length < 100){
+    console.log(wantToJoin.length +", "+players.length);
+    while(wantToJoin.length > 0 && players.length < gameCapacity){
         let randNum = Math.floor(Math.random() * (wantToJoin.length));
         let new_player = wantToJoin[randNum];
-        console.log(new_player);
         wantToJoin.splice(randNum,1);
-        players.push(new_player);
-        console.log(players[players.length-1]);
+        let color = '#';
+        for (let i = 0; i < 6; i++){
+            color += HexLetters[(Math.floor(Math.random() * 16))];
+        }
+        players.push({name:new_player,number: players.length, color:color, alive:true});
     }
+    currentlyDisplaying = 0;
     isPlaying = true;
   }
+function displayPlayer(){
+    if(!isPlaying){return;}
+    if(currentlyDisplaying < players.length){
+        const nextPlayer = document.createElement('p');
+        nextPlayer.textContent = players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name;
+        nextPlayer.style.color = players[currentlyDisplaying].color;
+        PlayerArea.appendChild(nextPlayer);
+        console.log(players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name);
+        currentlyDisplaying += 1;
+    }
+}
+    
