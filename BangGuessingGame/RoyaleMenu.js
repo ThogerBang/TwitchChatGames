@@ -5,6 +5,7 @@ const nick = "bang";
 
 const AddThøgers = document.getElementById('AddThøgers');
 const PickPlayersButton = document.getElementById('PickPlayersButton');
+const CounterDown = document.getElementById('CounterDown');
 const ResetButton = document.getElementById('Reset');
 const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
@@ -20,7 +21,9 @@ var wantToJoin = [];
 var players = [];
 var currentlyDisplaying = 0;
 var gameCapacity = 100;
-var countdown = 0;
+var counter = 0;
+var countdown = 5;
+var isCounting = false;
 
 let HexLetters = "0123456789ABCDEF";
 
@@ -79,7 +82,9 @@ function reset(){
 PickPlayersButton.onclick = function() {
     this.blur();
     if (isPlaying){
-        startCountdown();
+        isCounting = true;
+        PickPlayersButton.style.display = "none";
+        CounterDown.innerHTML = countdown;
     }else{
         pickPlayers();
         PickPlayersButton.innerHTML = "Start The Games!";
@@ -95,17 +100,20 @@ ResetButton.onclick = function() {
     wantToJoin = [];
     var JoinMessage = JoinOptions[Math.floor(Math.random() * (JoinOptions.length))];
     JoinText.innerHTML = "Type: \"" + JoinMessage +"\" To Join";
-    countdown = 0;
+    CounterDown.innerHTML = "";
+    PickPlayersButton.style.display = "inline"
+    counter = 0;
+    countdown = 5;
+    isCounting = false;
     isPlaying = false;
 };
 AddThøgers.onclick = function() {
-    for(let i = 0; i < 200; i++){
+    for(let i = 0; i < 100; i++){
         handleMessage("ThogerBang"+i,JoinMessage);
     }
 };
 
 function pickPlayers() {
-    console.log(wantToJoin.length +", "+players.length);
     while(wantToJoin.length > 0 && players.length < gameCapacity){
         let randNum = Math.floor(Math.random() * (wantToJoin.length));
         let new_player = wantToJoin[randNum];
@@ -124,16 +132,31 @@ function timeAction(){
     if(currentlyDisplaying < players.length){
         displayPlayer();
     }
+    if(isCounting){
+        counter++;
+        if(counter>10){
+            countdown--;
+            CounterDown.innerHTML = countdown;
+            if(countdown<=0){
+                startGames();
+                isCounting = false;
+            }
+            counter = 0;
+        }
+    }
 }
-function startCountdown(){
-    console.log("Starting Countdown");
+function startGames(){
+    localStorage.setItem("players",JSON.stringify(players));
+    console.log("Starting Games");
+    //const userInfoParsed = JSON.parse(localStorage.getItem("players"));
+    //console.log(userInfoParsed[0].name);
 }
 function displayPlayer(){
     const nextPlayer = document.createElement('p');
-        nextPlayer.textContent = players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name;
-        nextPlayer.style.color = players[currentlyDisplaying].color;
-        PlayerArea.appendChild(nextPlayer);
-        console.log(players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name);
-        currentlyDisplaying += 1;
+    nextPlayer.textContent = players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name;
+    nextPlayer.style.color = players[currentlyDisplaying].color;
+    PlayerArea.appendChild(nextPlayer);
+    //console.log(players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name);
+    currentlyDisplaying += 1;
 }
     
