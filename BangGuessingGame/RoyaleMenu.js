@@ -10,28 +10,36 @@ const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
 const JoinText = document.getElementById('JoinText');
 const PlayerArea = document.getElementById('PlayerArea');
+const Reminder = document.getElementById('Reminder');
 
-const JoinOptions = ["Put me in coach!", "I'm that guy!", "Let's rumble big dog!", "I will sacrifice myself to the old gods"];
+const JoinOptions = ["Put me in coach!", "I'm that guy!", "Let's rumble big dog!", "I will sacrifice myself"];
 
+var JoinMessage = JoinOptions[Math.floor(Math.random() * (JoinOptions.length))];
 var isPlaying = false;
 var wantToJoin = [];
 var players = [];
 var currentlyDisplaying = 0;
 var gameCapacity = 100;
+var countdown = 0;
 
 let HexLetters = "0123456789ABCDEF";
 
-JoinText.innerHTML = "Type: \"" + JoinOptions[Math.floor(Math.random() * (JoinOptions.length))] +"\" To Join";
+JoinText.innerHTML = "Type: \"" + JoinMessage +"\" To Join";
 //"Type: <br />\"" + JoinMessage +"\"<br />To Join";
 
-const myInterval = setInterval(displayPlayer, 100);
+const myInterval = setInterval(timeAction, 100);
 
 socket.addEventListener('open', (event) => {
     socket.send(`PASS oauth:${oAuth}`);
     socket.send(`NICK ${nick}`);
     let channel = sessionStorage.getItem('channel')
     if (channel===null || channel === ""){
-      winText.innerHTML = "you forgot to write a channel name!";
+      JoinText.innerHTML = "you forgot to write a channel name!";
+      ResetButton.style.display = "none";
+      PlayerArea.style.display = "none";
+      AddThøgers.style.display = "none";
+      PickPlayersButton.style.display = "none";
+      Reminder.style.display = "none";
     }
     socket.send(`JOIN #${channel}`);
 });
@@ -70,18 +78,25 @@ function reset(){
 
 PickPlayersButton.onclick = function() {
     this.blur();
-    pickPlayers();
-    PickPlayersButton.style.display = "none";
+    if (isPlaying){
+        startCountdown();
+    }else{
+        pickPlayers();
+        PickPlayersButton.innerHTML = "Start The Games!";
+    }
+    
     
 };
 ResetButton.onclick = function() {
-    isPlaying = false;
     this.blur();
-    PickPlayersButton.style.display = "inline";
+    PickPlayersButton.innerHTML = "Pick Random Players";
     PlayerArea.innerHTML = "";
     players = [];
     wantToJoin = [];
-    JoinText.innerHTML = "Type: \"" + JoinOptions[Math.floor(Math.random() * (JoinOptions.length))] +"\" To Join";
+    var JoinMessage = JoinOptions[Math.floor(Math.random() * (JoinOptions.length))];
+    JoinText.innerHTML = "Type: \"" + JoinMessage +"\" To Join";
+    countdown = 0;
+    isPlaying = false;
 };
 AddThøgers.onclick = function() {
     for(let i = 0; i < 200; i++){
@@ -104,15 +119,21 @@ function pickPlayers() {
     currentlyDisplaying = 0;
     isPlaying = true;
   }
-function displayPlayer(){
+function timeAction(){
     if(!isPlaying){return;}
     if(currentlyDisplaying < players.length){
-        const nextPlayer = document.createElement('p');
+        displayPlayer();
+    }
+}
+function startCountdown(){
+    console.log("Starting Countdown");
+}
+function displayPlayer(){
+    const nextPlayer = document.createElement('p');
         nextPlayer.textContent = players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name;
         nextPlayer.style.color = players[currentlyDisplaying].color;
         PlayerArea.appendChild(nextPlayer);
         console.log(players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name);
         currentlyDisplaying += 1;
-    }
 }
     

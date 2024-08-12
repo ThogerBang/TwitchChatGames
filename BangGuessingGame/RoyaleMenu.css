@@ -21,6 +21,8 @@ body {
 .JoinText {
     font-size: 50px;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .bigText {
     font-size: 50px;
@@ -28,7 +30,7 @@ body {
 }
 .PlayerArea{
     width: 95vw;
-    height: 65vh;
+    height: 60vh;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
@@ -37,18 +39,19 @@ body {
     box-sizing: border-box;
 }
 .PlayerArea p{
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 1px;
+    margin-bottom: 1px;
     margin-left: 10px;
-    padding: 0px;
+    padding: 1px;
     flex: 1 0 3%;
     font-weight: bold;
     max-height: 4.2%;
-    min-height: 4.2%;
+    min-height: 3.7%;
     min-width: 19.5%;
     max-width: 19.5%;
     white-space: nowrap;
     overflow: hidden;
+    font-size: 0.78em;
     text-overflow: ellipsis;
 }
 
