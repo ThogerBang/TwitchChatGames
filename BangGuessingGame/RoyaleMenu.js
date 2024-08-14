@@ -148,8 +148,12 @@ function timeAction(){
 function startGames(){
     localStorage.setItem("players",JSON.stringify(players));
     console.log("Starting Games");
+    navigateToGameSelector();
     //const userInfoParsed = JSON.parse(localStorage.getItem("players"));
     //console.log(userInfoParsed[0].name);
+}
+function navigateToGameSelector() {
+    window.location.href = 'GameSelector.html';
 }
 function displayPlayer(){
     const nextPlayer = document.createElement('p');
