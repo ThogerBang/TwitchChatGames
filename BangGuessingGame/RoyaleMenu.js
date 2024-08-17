@@ -13,7 +13,7 @@ const JoinText = document.getElementById('JoinText');
 const PlayerArea = document.getElementById('PlayerArea');
 const Reminder = document.getElementById('Reminder');
 
-const JoinOptions = ["Put me in coach!", "I'm that guy!", "Let's rumble big dog!", "I will sacrifice myself"];
+const JoinOptions = ["Put me in coach!", "I'm that guy!", "Let's rumble big dog!", "I will sacrifice myself", "I am the greatest chatter of all time"];
 
 var JoinMessage = JoinOptions[Math.floor(Math.random() * (JoinOptions.length))];
 var isPlaying = false;
