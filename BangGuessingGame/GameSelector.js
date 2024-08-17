@@ -11,7 +11,7 @@ const GamesOptions = [
     {name:"Rock Paper Scissor",link: "RockPaperScissor\\RockPaperScissor.html",imgSrc:"GameSelectorImages\\RockPaperScissor.png",lowerCapacity: 8,upperCapacity: 16},
     {name:"Caught!",link: "h",imgSrc:"GameSelectorImages\\Caught.jpg",lowerCapacity:"d",upperCapacity:"j"},
     {name:"Word Game",link: "h",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"100"},
-    {name:"Counting",link: "Counting\\Counting.html",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"60"}
+    {name:"Chat Learns Counting",link: "Counting\\Counting.html",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"60"}
 ];
 
 
