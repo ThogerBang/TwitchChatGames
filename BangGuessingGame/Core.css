@@ -100,3 +100,30 @@
 .bigHover:hover {
     transform: scale(1.1);
 }
+.PlayerArea{
+    width: 95vw;
+    height: 60vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    flex-direction:column;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.PlayerArea p{
+    margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 10px;
+    padding: 1px;
+    flex: 1 0 3%;
+    font-weight: bold;
+    max-height: 4.2%;
+    min-height: 3.7%;
+    min-width: 19.5%;
+    max-width: 19.5%;
+    white-space: nowrap;
+    border: solid 1px black;
+    overflow: hidden;
+    font-size: 0.78em;
+    text-overflow: ellipsis;
+}

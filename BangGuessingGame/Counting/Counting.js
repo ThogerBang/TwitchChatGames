@@ -6,6 +6,7 @@ const nick = "bang";
 const CurrentCount = document.getElementById("CurrentCount");
 const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
+const PlayerArea = document.getElementById('PlayerArea');
 
 const patterns = ["Plus1","Fibonacci","Primes","Times7","1one2two","even","1upFaster","minus8","bigJump","1foward2back"];
 const listOfPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
@@ -14,9 +15,13 @@ const listOfPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53
 const firstNumberInPattern = [1,1,2,7,1,2,1,8,2,2];
 const initialClue = ["1","1","2","7","1","2","1","16, 8","0, 999, 2","1, 2"];
 
+const isInteger = /^-?\d+$/;
+
+const survivePercentage = 0.1;
+
 var players =  JSON.parse(localStorage.getItem("players"));
 var thisPlayers = [];
-var isPLaying = false;
+var isPlaying = false;
 var currentSequence = "";
 var formernumber = 0;
 var currentNumber = 1;
@@ -27,10 +32,11 @@ var Survivors = [];
 var pattern = 0; 
 for (let i = 0; i<players.length; i++){
     if(players[i].alive){
-        thisPlayers.push({player:players[i], moveOn:false});
+        thisPlayers.push(players[i]);
     }
 }
-numberOfSurvivors = Math.floor(thisPlayers.length*0.6);
+
+numberOfSurvivors = Math.floor(thisPlayers.length * survivePercentage);
 rollNewPattern();
 checkValidPattern();
 console.log(patterns[pattern]);
@@ -40,7 +46,7 @@ if (patterns[pattern] === "bigJump") { formernumber = 999;}
 getNextNumber();
 CurrentCount.innerHTML = currentSequence;
 
-isPLaying = true;
+isPlaying = true;
 
 
 socket.addEventListener('open', (event) => {
@@ -64,19 +70,22 @@ socket.addEventListener('message', event =>{
 
 
 function handleMessage(user, message){
-    if(isAlivePlayer(user) && !Survivors.includes(user) && isPLaying){
-        if (parseInt(message) === nextNumber){
-            updateCurrentNumber();
-            Survivors.push(user);
-            if (Survivors.length >= numberOfSurvivors){
-                isPLaying = false;
-            }
-            if(isPLaying){
-                getNextNumber();
-            }
-            console.log("next: "+nextNumber+ " nrS: " +Survivors.length);
-        }
-        
+    
+  if(isAlivePlayer(user) && !Survivors.includes(user) && isPlaying){
+    if (!isInteger.test(message)) {return;}
+    if (parseInt(message) === nextNumber){
+      updateCurrentNumber();
+      Survivors.push(user);
+      let thisPlayer = thisPlayers.find(p => p.name === user);
+      displayPlayer(thisPlayer.number);
+      if (Survivors.length >= numberOfSurvivors){
+        endGame();
+      }
+      if(isPlaying){
+        getNextNumber();
+      }
+      console.log("next: "+nextNumber+ " nrS: " +Survivors.length);
+      }  
     }
 }
 
@@ -86,6 +95,19 @@ FakeText.addEventListener('keydown', (event) => {
     }
   });
 
+
+function endGame(){
+  isPlaying = false;
+  console.log("The game has ended");
+  let eliminated = [];
+  for(let i = 0; i < thisPlayers.length; i++){
+    if(!Survivors.includes(thisPlayers[i].name)){
+      eliminated.push(thisPlayers[i]);
+    }
+  }
+  localStorage.setItem("eliminated",JSON.stringify(eliminated));
+  window.location.href = "../GameSelector.html";
+}
 function updateCurrentNumber(){
     formernumber = currentNumber;
     currentNumber = nextNumber;
@@ -93,7 +115,7 @@ function updateCurrentNumber(){
     CurrentCount.innerHTML = currentSequence;
 }
 function isAlivePlayer(user){
-    return thisPlayers.some(p => p.player.name === user);
+    return thisPlayers.some(p => p.name === user);
 }
 function getNextNumber(){
     switch(patterns[pattern]) {
@@ -131,7 +153,6 @@ function getNextNumber(){
           break;
         case "1foward2back":
             nextNumber = foward2back1Sequence(Survivors.length + 3);
-            console.log(nextNumber);
             break;
         default:
       }
@@ -173,3 +194,11 @@ function checkValidPattern(){
 function rollNewPattern(){
     pattern = Math.floor(Math.random() * (patterns.length));
 }
+function displayPlayer(p){
+  const nextPlayer = document.createElement('p');
+  nextPlayer.textContent = players[p].number +". "+ players[p].name;
+  nextPlayer.style.color = players[p].color;
+  PlayerArea.appendChild(nextPlayer);
+  //console.log(players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name);
+}
+ 

@@ -122,7 +122,7 @@ function pickPlayers() {
         for (let i = 0; i < 6; i++){
             color += HexLetters[(Math.floor(Math.random() * 16))];
         }
-        players.push({name:new_player,number: players.length, color:color, alive:true});
+        players.push({name:new_player,number: players.length, color:color, alive:true, justEliminated:false});
     }
     currentlyDisplaying = 0;
     isPlaying = true;
@@ -130,7 +130,8 @@ function pickPlayers() {
 function timeAction(){
     if(!isPlaying){return;}
     if(currentlyDisplaying < players.length){
-        displayPlayer();
+        displayPlayer(currentlyDisplaying);
+        currentlyDisplaying += 1;
     }
     if(isCounting){
         counter++;
@@ -155,12 +156,11 @@ function startGames(){
 function navigateToGameSelector() {
     window.location.href = 'GameSelector.html';
 }
-function displayPlayer(){
+function displayPlayer(p){
     const nextPlayer = document.createElement('p');
-    nextPlayer.textContent = players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name;
-    nextPlayer.style.color = players[currentlyDisplaying].color;
+    nextPlayer.textContent = players[p].number +". "+ players[p].name;
+    nextPlayer.style.color = players[p].color;
     PlayerArea.appendChild(nextPlayer);
     //console.log(players[currentlyDisplaying].number +". "+ players[currentlyDisplaying].name);
-    currentlyDisplaying += 1;
 }
     
