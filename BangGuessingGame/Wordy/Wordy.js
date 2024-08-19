@@ -3,14 +3,17 @@ const socket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
 const oAuth = "bbxuasj3p1vaid6o0h2oye3lvnwh3n";
 const nick = "bang";
 
+const CounterDown = document.getElementById('CounterDown');
 const WordTable = document.getElementById("WordTable");
 const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
 
+const gameDuration = 90;
+
 var players =  JSON.parse(localStorage.getItem("players"));
 var isPlaying = true;
 var counter = 0;
-var countdown = 5;
+var countdown = gameDuration;
 var isCounting = true;
 var words = [];
 var thisPlayers = [];
@@ -19,6 +22,9 @@ for (let i = 0; i<players.length; i++){
       thisPlayers.push({player:players[i],word:""});
   }
 }
+
+const myInterval = setInterval(timeAction, 100);
+CounterDown.innerHTML = ""+gameDuration;
 
 socket.addEventListener('open', (event) => {
     socket.send(`PASS oauth:${oAuth}`);
@@ -45,7 +51,7 @@ FakeText.addEventListener('keydown', (event) => {
 });
 
 function handleMessage(user, message){
-  if(isAlivePlayer(user) && isPlaying){
+  if(isAlivePlayer(user) && isPlaying && message.split(" ").length <=1){
     let play = thisPlayers.find(p => p.player.name === user);
     let oldWord = play.word;
     play.word = message;
@@ -70,7 +76,6 @@ function updateWord(oldWord,newWord){
     words.push({word:newWord,amount:1})
   }
   words.sort(function(a, b){return b.amount - a.amount});
-  console.log(words);
 }
 
 function updateTable(){
@@ -93,6 +98,37 @@ function updateTable(){
   }
 }
 
+function endGame(){
+  isPlaying = false;
+  let eliminated = [];
+  let winningWord = "Claude";
+  if(words.length >= 2){
+    winningWord = words[1];
+  }
+  console.log(winningWord);
+  for(let i = 0; i < thisPlayers.length; i++){
+    if(thisPlayers[i].word !== winningWord.word){
+      eliminated.push(thisPlayers[i].player);
+    }
+  }
+  localStorage.setItem("eliminated",JSON.stringify(eliminated));
+  window.location.href = "../GameSelector.html";
+}
+
 function isAlivePlayer(user){
   return thisPlayers.some(p => p.player.name === user);
+}
+
+function timeAction(){
+  if (isPlaying){
+      counter++;
+      if(counter>10){
+          countdown--;
+          CounterDown.innerHTML = countdown;
+          if(countdown<=0){
+              endGame();
+          }
+          counter = 0;
+      }
+  }
 }

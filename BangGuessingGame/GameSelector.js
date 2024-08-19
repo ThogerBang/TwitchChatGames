@@ -106,7 +106,6 @@ function timeAction(){
             counter = 0;
         }
     }
-    
 }
 function startGame(){
     console.log(chosenGame.name);

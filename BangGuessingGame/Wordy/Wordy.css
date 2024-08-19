@@ -5,25 +5,31 @@ html {
 body {
     background-color: #e8f8ff;
     font-family: Arial, sans-serif;
-    overflow: hidden;
     height: 100%;
     padding-left: 20px;
     padding-right: 20px;
 }
+.CounterDown {
+  top: 12.5%;
+  margin-left: 45%;
+  font-size: 50px;
+  z-index: 2;
+}
 .WordTable{
-    width: 50%;
-    margin-left: 25%;
-    margin-top: 20px;
+  background-color: white;
+  width: 75%;
+  margin-left: 12.5%;
+  margin-top: 20px;
 }
 table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-  th {
-    width:10%;
-    padding: 5px;
-  }
-  td {
-    padding: 5px;
-    text-align: left;
-  }
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th {
+  width: 10%;
+  padding: 5px;
+}
+td {
+  padding: 5px;
+  text-align: left;
+}
