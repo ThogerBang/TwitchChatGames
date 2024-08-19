@@ -10,3 +10,20 @@ body {
     padding-left: 20px;
     padding-right: 20px;
 }
+.WordTable{
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 20px;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th {
+    width:10%;
+    padding: 5px;
+  }
+  td {
+    padding: 5px;
+    text-align: left;
+  }

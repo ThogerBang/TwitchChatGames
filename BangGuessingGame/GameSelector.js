@@ -10,10 +10,10 @@ const movingPictureBox = document.getElementById('movingPictureBox');
 const allTheP = [];
 
 const GamesOptions = [
-    {name:"Rock Paper Scissor",link: "RockPaperScissor\\RockPaperScissor.html",imgSrc:"GameSelectorImages\\RockPaperScissor.png",lowerCapacity: 8,upperCapacity: 16},
-    {name:"Caught!",link: "h",imgSrc:"GameSelectorImages\\Caught.jpg",lowerCapacity:"d",upperCapacity:"j"},
-    {name:"Word Game",link: "h",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"100"},
-    {name:"Chat Learns Counting",link: "Counting\\Counting.html",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"60"}
+    {name:"Rock Paper Scissor",link: "RockPaperScissor\\RockPaperScissor.html",imgSrc:"GameSelectorImages\\RockPaperScissor.png",lowerCapacity: 8,upperCapacity: 16, isFinal: true},
+    {name:"Caught!",link: "h",imgSrc:"GameSelectorImages\\Caught.jpg",lowerCapacity:"d",upperCapacity:"j", isFinal: false},
+    {name:"Runner-Up",link: "Wordy\\Wordy.html",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"100", isFinal: false},
+    {name:"Chat Learns To Count",link: "Counting\\Counting.html",imgSrc:"GameSelectorImages\\WordGame.jpg",lowerCapacity:"20",upperCapacity:"60", isFinal: false}
 ];
 
 const eliminationTime = 1;

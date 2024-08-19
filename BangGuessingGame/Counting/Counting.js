@@ -70,7 +70,6 @@ socket.addEventListener('message', event =>{
 
 
 function handleMessage(user, message){
-    
   if(isAlivePlayer(user) && !Survivors.includes(user) && isPlaying){
     if (!isInteger.test(message)) {return;}
     if (parseInt(message) === nextNumber){
@@ -115,7 +114,7 @@ function updateCurrentNumber(){
     CurrentCount.innerHTML = currentSequence;
 }
 function isAlivePlayer(user){
-    return thisPlayers.some(p => p.name === user);
+  return thisPlayers.some(p => p.name === user);
 }
 function getNextNumber(){
     switch(patterns[pattern]) {
