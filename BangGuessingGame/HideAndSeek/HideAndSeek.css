@@ -15,10 +15,47 @@ body {
   font-size: 50px;
   z-index: 2;
 }
-.bigBox{
+
+
+.bigBox {
   margin: auto;
   margin-top: 5%;
-  height: 50%;
+  display: grid;
+  height: 600px;
+  width: 1000px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+.SmallBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid gray;
+  transition: border-color 0.3s ease;
+  font-size: 20px;
+  background-color: lightgray; 
+}
+.MiddleBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(128, 128, 128);
+  background-color: lightgray; 
+  position: relative;
+  overflow: hidden;
+}
+.SmallBox:hover {
+  border-color: white;
+}
+img {
   width: 50%;
-  border: 1px solid black;
+  height: 100%;
+}
+.small-element {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border: 2px solid black;
+  z-index: 2;
+  text-align: center;
 }
