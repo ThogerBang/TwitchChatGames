@@ -11,20 +11,25 @@ const SmallBoxes = [document.getElementById('SmallBox1'),document.getElementById
 
 const isInteger = /^-?\d+$/;
 
-const hidingTime = 20;
+const hidingTime = 15;
+const killTime = 2;
 
 var players =  JSON.parse(localStorage.getItem("players"));
 var isPlaying = true;
 var inHidingphase = true;
+var isKilling = false;
 var counter = 0;
 var countdown = hidingTime;
 var isCounting = true;
 var words = [];
 var thisPlayers = [];
+var eliminated = [];
 var playerBoxes = [];
+var revealed = [];
+
 for (let i = 0; i<players.length; i++){
   if(players[i].alive){
-    thisPlayers.push({player:players[i],spot:0});
+    thisPlayers.push({player:players[i],spot:10});
     playerBoxes.push(document.createElement('div')); 
     playerBoxes[i].classList.add('small-element');
     const posX = Math.floor(Math.random() * (MiddleBox.clientWidth - 20));
@@ -37,7 +42,7 @@ for (let i = 0; i<players.length; i++){
   }
 }
 const myInterval = setInterval(timeAction, 100);
-CounterDown.innerHTML = ""+hidingTime;
+CounterDown.innerHTML = ""+ hidingTime;
 
 socket.addEventListener('open', (event) => {
     socket.send(`PASS oauth:${oAuth}`);
@@ -68,25 +73,59 @@ FakeUser.addEventListener('keydown', (event) => {
   }
 });
 
+for (let i = 0; i < SmallBoxes.length; i++){
+  const int = i;
+  SmallBoxes[i].addEventListener('click',(event)=>{
+    boxClicked(int);
+  });
+}
+
 function handleMessage(user, message){
   if(isAlivePlayer(user) && isPlaying && inHidingphase && message.split(" ").length <=1){
     let play = thisPlayers.find(p => p.player.name === user);
     if (isInteger.test(message)){
-      let integer = parseInt(message);
-      if (integer>0 && integer <9){
-        play.spot = integer;
-        playerBoxes[thisPlayers.indexOf(play)].remove();
-        playerBoxes[thisPlayers.indexOf(play)] = "null";
+      let integer = (parseInt(message));
+      if (integer>0 && integer <9 && !revealed.includes(integer-1)){
+        play.spot = integer-1;
+        //playerBoxes[thisPlayers.indexOf(play)].style.display = "none";
+        window.requestAnimationFrame(() => {
+          playerBoxes[thisPlayers.indexOf(play)].left = "300px";
+          playerBoxes[thisPlayers.indexOf(play)].style.top = "200px";
+      });
       } 
     }
   }  
 }
 
+function boxClicked(i){
+  console.log(revealed);
+  if(!inHidingphase && !isKilling &&!revealed.includes(i)){
+    SmallBoxes[i].children[0].style.display = "none";
+    revealed.push(i);
+    revealBox(i);
+    isKilling = true;
+    countdown = killTime;
+  }
+}
+
+function revealBox(j){
+  for (let i = 0; i<thisPlayers.length; i++){
+    if(thisPlayers[i].spot === j){
+      let rect = SmallBoxes[j].getBoundingClientRect();
+      playerBoxes[i].style.display = "block";
+      //const posY = rect.top - (SmallBoxes[j].clientHeight/2) + 10;
+      const posX = Math.floor(Math.random() * (SmallBoxes[j].clientWidth - 20));
+      const posY = Math.floor(Math.random() * (SmallBoxes[j].clientHeight - 20));
+      playerBoxes[i].style.left = `${posX}px`;
+      playerBoxes[i].style.top = `${posY}px`;
+      SmallBoxes[j].appendChild(playerBoxes[i]);
+    }
+  }
+}
+
 
 function endGame(){
   isPlaying = false;
-  let eliminated = [];
-  //add eliminated players
   localStorage.setItem("eliminated",JSON.stringify(eliminated));
   window.location.href = "../GameSelector.html";
 }
@@ -97,13 +136,29 @@ function isAlivePlayer(user){
 
 function timeAction(){
   if (isPlaying){
+    if (inHidingphase || isKilling){
       counter++;
       if(counter>10){
           countdown--;
-          CounterDown.innerHTML = countdown;
-          if(countdown<=0){
+          if (inHidingphase){
+            CounterDown.innerHTML = countdown;
+          }
+          if(countdown <= 0){
+            if(inHidingphase){
+              inHidingphase = false;
+              isKilling = false;
+            }
+            else if(isKilling){
+              if (revealed.length >= 3){
+                endGame();
+              }else{
+                inHidingphase = true;
+                countdown = hidingTime;
+              }
+            }
           }
           counter = 0;
       }
+    }
   }
 }
