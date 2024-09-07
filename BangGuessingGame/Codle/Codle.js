@@ -3,18 +3,27 @@ const socket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
 const oAuth = "bbxuasj3p1vaid6o0h2oye3lvnwh3n";
 const nick = "bang";
 
-const CounterDown = document.getElementById('CounterDown');
-const WordTable = document.getElementById("WordTable");
+const PlayButton = document.getElementById('PlayButton');
+const invalidCode = document.getElementById('invalidCode');
+const CodeInput = document.getElementById('CodeInput');
 const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
+const CodeBoxes = [document.getElementById('Code1'),document.getElementById('Code2'),document.getElementById('Code3'),document.getElementById('Code4')];
+const AnswerContainers = [document.getElementById('AnswerContainer1'),document.getElementById('AnswerContainer2'),document.getElementById('AnswerContainer3')]
 
-const gameDuration = 90;
+const survivePercentage = 0.1;
 
 var players =  JSON.parse(localStorage.getItem("players"));
-var isPlaying = true;
-var counter = 0;
-var countdown = gameDuration;
-var isCounting = true;
+var isPlaying = false;
+var revealed = false;
+var code = "";
+var valid;
+var answerPos = 0;
+var safe = [];
+var numberOfSurvivors = 0; 
+
+const isInteger = /^-?\d+$/;
+
 var words = [];
 var thisPlayers = [];
 for (let i = 0; i<players.length; i++){
@@ -23,8 +32,8 @@ for (let i = 0; i<players.length; i++){
   }
 }
 
-const myInterval = setInterval(timeAction, 100);
-CounterDown.innerHTML = ""+gameDuration;
+numberOfSurvivors = Math.ceil(thisPlayers.length * survivePercentage);
+
 
 socket.addEventListener('open', (event) => {
     socket.send(`PASS oauth:${oAuth}`);
@@ -49,65 +58,61 @@ FakeText.addEventListener('keydown', (event) => {
       handleMessage(FakeUser.value,FakeText.value)
   }
 });
+FakeUser.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+      handleMessage(FakeUser.value,FakeText.value)
+  }
+});
+
+PlayButton.addEventListener('click', (event) => {
+  isPlaying = "true";
+  CodeInput.setAttribute('disabled', '');
+  PlayButton.style.display = "none";
+  console.log("plad");
+});
+
+CodeInput.addEventListener('keyup', (event) => {
+  code = CodeInput.value;
+  valid = isValid(code);
+  for(let i = 0; i < CodeBoxes.length; i++){
+    if(code.length <= i){
+      CodeBoxes[i].innerHTML = "";
+    }
+    else{
+      CodeBoxes[i].innerHTML = "●";
+    }
+  }
+  if(valid){
+    invalidCode.style.display = "none";
+    PlayButton.removeAttribute('disabled');
+  }else{
+    invalidCode.style.display = "block";
+    PlayButton.setAttribute('disabled', '');
+  }
+});
 
 function handleMessage(user, message){
-  if(isAlivePlayer(user) && isPlaying && message.split(" ").length <=1){
-    let play = thisPlayers.find(p => p.player.name === user);
-    let oldWord = play.word;
-    play.word = message;
-    updateWord(oldWord,message);
-    updateTable();
+  if(isAlivePlayer(user) && isPlaying && message.split(" ").length <=1 && isValid(message) && !safe.includes(user) && (safe.length < numberOfSurvivors)){
+    console.log("in");
+    addGuessBox(message);
+    if (message === code){
+      safe.push(user)
+      if (safe.length >= numberOfSurvivors){
+        endGame();
+      }
+      if(!revealed){
+        revealCode();
+      }
+      revealed = true;
+    }
   }  
-}
-
-function updateWord(oldWord,newWord){
-  if(words.some(w => w.word === oldWord)){
-    let oWord = words.find(w => w.word === oldWord);
-    if(oWord.amount <=1){
-      words.splice(words.indexOf(oWord),1)
-    }else{
-      words[words.indexOf(oWord)] = {word:oWord.word,amount:oWord.amount-1};
-    }
-  }
-  if(words.some(w => w.word === newWord)){
-    let Word = words.find(w => w.word === newWord);
-    words[words.indexOf(Word)] = {word:Word.word,amount:Word.amount+1};
-  }else{
-    words.push({word:newWord,amount:1})
-  }
-  words.sort(function(a, b){return b.amount - a.amount});
-}
-
-function updateTable(){
-  WordTable.innerHTML = "<tr><th style=\"width:80%;  text-align: middle;\" colspan=\"2\">LeaderBoard</th><th style=\"width:20%;  text-align: middle;\">Votes</th></tr>";
-  for(let i = 0; i < words.length; i++){
-    const tr = document.createElement('tr');
-    if(i === 1){
-      tr.style.backgroundColor = "green";
-    }
-    const th = document.createElement('th');
-    th.textContent = ((i+1)+".");
-    const td1 = document.createElement('td');
-    td1.textContent = (words[i].word);
-    const td2 = document.createElement('td');
-    td2.textContent = (words[i].amount);
-    tr.appendChild(th);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    WordTable.appendChild(tr);
-  }
 }
 
 function endGame(){
   isPlaying = false;
   let eliminated = [];
-  let winningWord = "Claude";
-  if(words.length >= 2){
-    winningWord = words[1];
-  }
-  console.log(winningWord);
   for(let i = 0; i < thisPlayers.length; i++){
-    if(thisPlayers[i].word !== winningWord.word){
+    if(!safe.some(p => thisPlayers[i].player.name === p)){
       eliminated.push(thisPlayers[i].player);
     }
   }
@@ -119,16 +124,50 @@ function isAlivePlayer(user){
   return thisPlayers.some(p => p.player.name === user);
 }
 
-function timeAction(){
-  if (isPlaying){
-      counter++;
-      if(counter>10){
-          countdown--;
-          CounterDown.innerHTML = countdown;
-          if(countdown<=0){
-              endGame();
-          }
-          counter = 0;
-      }
+function addGuessBox(codeGuess){
+  let guessBox = document.createElement('div');
+  guessBox.classList.add('GuessBox');
+  for(let i = 0; i<CodeBoxes.length;i++){
+    let codeBox = document.createElement('div');
+    codeBox.textContent = codeGuess.charAt(i);
+    codeBox.style.backgroundColor = getColor(codeGuess.charAt(i),i);
+    codeBox.classList.add('CodeBox');
+    guessBox.append(codeBox);
+  }
+  AnswerContainers[answerPos].prepend(guessBox);
+  if (answerPos >= 2){
+    answerPos = 0;
+  }else{
+    answerPos += 1
+  }
+  let children = AnswerContainers[answerPos].children;
+  if(children.length >=10){
+    AnswerContainers[answerPos].removeChild(children[children.length-1]);
+  }
+}
+
+function revealCode(){
+  for(let i = 0; i < CodeBoxes.length; i++){
+    CodeBoxes[i].innerHTML = code.charAt(i);
+  }
+}
+
+function isValid(code){
+  let Valid = (code.length === CodeBoxes.length);
+  for(let i = 0; i < CodeBoxes.length; i++){
+    if (!isInteger.test(code[i])){
+      Valid = false;
+    }
+  }
+  return Valid;
+}
+
+function getColor(char,pos){
+  if (!code.includes(char)){
+    return 'lightgrey';
+  }else if(code.charAt(pos) === char){
+    return 'green'
+  }else{
+    return 'yellow'
   }
 }

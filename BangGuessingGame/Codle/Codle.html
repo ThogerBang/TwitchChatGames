@@ -4,30 +4,47 @@
   <meta charset="UTF-8">
   <title>Farming</title>
   <link rel="stylesheet" href="../Core.css" />
-  <link rel="stylesheet" href="Caught.css" />
+  <link rel="stylesheet" href="Codle.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
   <a href="../menu.html" class = "bigHover" id = "BangGames">BangGames</a>
-  <div id = WinCondition> Write the second most popular word only your latest word counts</div>
-  <div id="CounterDown" class="CounterDown"></div>
+  <div id = WinCondition> Write a 4-digit code, the first chatters to guess it are safe</div>
+  
+  <div>
+    <div>Code:</div>
+    <input type="text" style="color: transparent;" id="CodeInput" autocomplete="off">
+    <div style="display: none; color: red;" id = "invalidCode">invalid code:</div>
+  </div>
+  <div id = Play class = "play-button" >
+    <button disabled type="button" id="PlayButton" class="bigHover">Play!</button>
+  </div>
+  <div id = HiddenCode class = "HiddenCode">
+    <div class = "CodeBox">
+      <div id = Code1 ></div>
+    </div>
+    <div class = "CodeBox" >
+      <div id = Code2 ></div>
+    </div>
+    <div class = "CodeBox" >
+      <div id = Code3 ></div>
+    </div>
+    <div class = "CodeBox" >
+      <div id = Code4 ></div>
+    </div>
+  </div>
   <div id = Fake class = "Fake">
     <input type="text" id="FakeUser">
     <input type="text" id="FakeText">
   </div>
-  <table class = "WordTable" id = "WordTable">
-    <tr>
-      <th style="width:10%;  text-align: middle;"></th>
-      <th style="width:80%;  text-align: middle;">LeaderBoard</th>
-      <th style="width:10%;  text-align: middle;">Votes</th>
-    </tr>
-    <tr>
-      <th>1.</th>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-  </table>
-  <script src="Caught.js" type="module"></script>
+  <div id = BigAnswerContainer class = "BigAnswerContainer">
+    <div id = AnswerContainer1 class = "AnswerContainer">
+    </div>
+    <div id = AnswerContainer2 class = "AnswerContainer">
+    </div>
+    <div id = AnswerContainer3 class = "AnswerContainer">
+    </div>
+  </div>
+  <script src="Codle.js" type="module"></script>
 </body>
 </html>
