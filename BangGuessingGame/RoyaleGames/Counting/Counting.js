@@ -105,7 +105,7 @@ function endGame(){
     }
   }
   localStorage.setItem("eliminated",JSON.stringify(eliminated));
-  window.location.href = "../GameSelector.html";
+  window.location.href = "../../GameSelector.html";
 }
 function updateCurrentNumber(){
     formernumber = currentNumber;

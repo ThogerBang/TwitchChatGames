@@ -53,66 +53,11 @@ FakeText.addEventListener('keydown', (event) => {
 function handleMessage(user, message){
   if(isAlivePlayer(user) && isPlaying && message.split(" ").length <=1){
     let play = thisPlayers.find(p => p.player.name === user);
-    let oldWord = play.word;
-    play.word = message;
-    updateWord(oldWord,message);
-    updateTable();
   }  
 }
 
-function updateWord(oldWord,newWord){
-  if(words.some(w => w.word === oldWord)){
-    let oWord = words.find(w => w.word === oldWord);
-    if(oWord.amount <=1){
-      words.splice(words.indexOf(oWord),1)
-    }else{
-      words[words.indexOf(oWord)] = {word:oWord.word,amount:oWord.amount-1};
-    }
-  }
-  if(words.some(w => w.word === newWord)){
-    let Word = words.find(w => w.word === newWord);
-    words[words.indexOf(Word)] = {word:Word.word,amount:Word.amount+1};
-  }else{
-    words.push({word:newWord,amount:1})
-  }
-  words.sort(function(a, b){return b.amount - a.amount});
-}
-
-function updateTable(){
-  WordTable.innerHTML = "<tr><th style=\"width:80%;  text-align: middle;\" colspan=\"2\">LeaderBoard</th><th style=\"width:20%;  text-align: middle;\">Votes</th></tr>";
-  for(let i = 0; i < words.length; i++){
-    const tr = document.createElement('tr');
-    if(i === 1){
-      tr.style.backgroundColor = "green";
-    }
-    const th = document.createElement('th');
-    th.textContent = ((i+1)+".");
-    const td1 = document.createElement('td');
-    td1.textContent = (words[i].word);
-    const td2 = document.createElement('td');
-    td2.textContent = (words[i].amount);
-    tr.appendChild(th);
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    WordTable.appendChild(tr);
-  }
-}
 
 function endGame(){
-  isPlaying = false;
-  let eliminated = [];
-  let winningWord = "Claude";
-  if(words.length >= 2){
-    winningWord = words[1];
-  }
-  console.log(winningWord);
-  for(let i = 0; i < thisPlayers.length; i++){
-    if(thisPlayers[i].word !== winningWord.word){
-      eliminated.push(thisPlayers[i].player);
-    }
-  }
-  localStorage.setItem("eliminated",JSON.stringify(eliminated));
-  window.location.href = "../GameSelector.html";
 }
 
 function isAlivePlayer(user){
