@@ -9,23 +9,37 @@
 </head>
 <body>
   <a href="../../menu.html" class = "bigHover" id = "BangGames">BangGames</a>
-  <div id = WinCondition> Choose your Snail</div>
+  
   <div id = Fake class = "Fake">
     <input type="text" id="FakeUser">
     <input type="text" id="FakeText">
   </div>
-  
+  <div id = WinCondition> Choose your Snail</div>
   <div>
     <div class="CounterContainer">
       <div id = "CounterDown" class="CounterDown"></div>
     </div>
     <div id ='RaceCourt' class ='RaceCourt'>
-      <div id ='StartArea' class ='StartArea'></div>
-      <div id ='Court' class ='Court'></div>
+      <div id ='StartArea' class ='StartArea'>
+      </div>
+      <div id ='Court' class ='Court'>
+        <div id = 'BoostLane1'  class ='BoostLane'>
+          <div>BOOOOOST!!!</div>
+        </div>
+        <div id = 'BoostLane2' class ='BoostLane'>
+          <div>BOOOOOST!!!</div>
+        </div>
+        <div id = 'BoostLane3' class ='BoostLane'>
+          <div>BOOOOOST!!!</div>
+        </div>
+        <div id = 'BoostLane4' class ='BoostLane'>
+          <div>BOOOOOST!!!</div>
+        </div>
+      </div>
       <div id ='EndArea' class ='EndArea'>
         <img src="SnailImages\WinArea.jpg">
-    </div>
-    </div>
+      </div>
+    </div> 
     <div id = "Snail1" class = "Snail">
       <img src="SnailImages\Snail.jpg">
       <div class = 'name'></div>
@@ -42,6 +56,10 @@
       <img src="SnailImages\Snail.jpg">
       <div class = 'name'></div>
     </div>
+    <div id ='Snail1Bets' class ='Bet'>0</div>
+    <div id ='Snail2Bets' class ='Bet'>0</div>
+    <div id ='Snail3Bets' class ='Bet'>0</div>
+    <div id ='Snail4Bets' class ='Bet'>0</div>
   </div>
   <script src="SnailRace.js" type="module"></script>
 </body>

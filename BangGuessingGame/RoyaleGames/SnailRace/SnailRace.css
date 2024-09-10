@@ -23,15 +23,54 @@ body {
 }
 
 .StartArea{
+  position: relative;
   height: 100%;
   width: 10%;
   border: 2px solid black;
+  z-index: 3;
+}
+.Bet{
+  position: absolute;
+  border: 1px solid black;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  z-index: 3;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Court{
   height: 100%;
   width: 80%;
   border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.BoostLane{
+  width: 100%;
+  height: 25%;
+  border: 2px;
+  display: none;
+  opacity: 0;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+.BoostLane:hover{
+  background-color: lightgrey;
+  opacity: 0.5;
+}
+.BoostLane div{
+  opacity: 1;
+  transform: skew(-30deg);
 }
 
 .EndArea{
@@ -70,8 +109,8 @@ body {
   position: absolute;
   top: 25%;
   height: 5%;
-  width: 40%;
-  left: 30%;
+  width: 45%;
+  left: 28.5%;
   z-index: 2;
 }
 .CounterDown {
@@ -79,6 +118,15 @@ body {
   position: relative;
   font-size: 2em;
   z-index: 2;
+}
+#WinCondition{
+  position: absolute;
+  top: 20%;
+  height: 5%;
+  width: 100%;
+  z-index: 2;
+  text-align: center;
+  font-size: 1.8em;
 }
 
 
