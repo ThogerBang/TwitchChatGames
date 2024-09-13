@@ -1,105 +1,90 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>Farming</title>
-  <link rel="stylesheet" href="../../Core.css" />
-  <link rel="stylesheet" href="RockPaperScissor.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <title>Farming</title>
+    <link rel="stylesheet" href="../../Core.css" />
+    <link rel="stylesheet" href="RockPaperScissor.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
+
 <body>
-  <a href="../../menu.html" class = "bigHover" id = "BangGames">BangGames</a>
-  <div id="CounterDown" class="CounterDown"></div>
-  <div id = WinCondition> You need to win 2 games to move on, 3 losses and you are eliminated
-
-  </div>
-  <div class = "TournamentField">
-    <div class = "RoundContainer BorderRight">
-        <div class = "MatchRoom RoundOf16">
-
+    <a href="../../menu.html" class="bigHover" id="BangGames">BangGames</a>
+    <div id="CounterDown" class="CounterDown"></div>
+    <div id=WinCondition> You need to win 2 games to move on, 3 losses and you are eliminated
+    <div id=Fake class="Fake">
+        <input type="text" id="FakeUser">
+        <input type="text" id="FakeText">
+    </div>
+    </div>
+    <div class="TournamentField">
+        <div id="Round1Of16" class="RoundContainer">
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
         </div>
-        <div class = "MatchRoom RoundOf16">
-
+        <div id="Round1Of8" class="RoundContainer">
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
         </div>
-        <div class = "MatchRoom RoundOf16">
-
+        <div id="Round1Of4" class="RoundContainer">
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
         </div>
-        <div class = "MatchRoom RoundOf16">
-
+        <div id="Final" class="FinalContainer">
+            <div id = "FinalMatch" class="MatchRoom FinaleBox">
+                <div style="left:45%;font-size: 1.5em;" class="Vs"> VS </div>
+            </div >
+        </div>
+        <div id="Round2Of4" class="RoundContainer">
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+        </div>
+        <div id="Round2Of8" class="RoundContainer">
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+        </div>
+        <div id="Round2Of16" class="RoundContainer">
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
+            <div class="MatchRoom">
+                <div class="Vs"> VS </div>
+            </div>
         </div>
     </div>
-    <div class = "RoundContainer BorderRight">
-        <div class = "MatchRoom RoundOf8">
-
-        </div>
-        <div class = "MatchRoom RoundOf8">
-
-        </div>
-    </div>
-    <div class = "RoundContainer BorderRight">
-        <div class = "MatchRoom RoundOf4">
-
-        </div>
-    </div>
-    <div class = "FinalContainer BorderRight">
-        <div class = "MatchRoom RoundOf4">
-
-        </div>
-    </div>
-    <div class = "RoundContainer BorderRight">
-        <div class = "MatchRoom RoundOf4">
-
-        </div>
-    </div>
-    <div class = "RoundContainer BorderRight">
-        <div class = "MatchRoom RoundOf8">
-
-        </div>
-        <div class = "MatchRoom RoundOf8">
-
-        </div>
-    </div>
-    <div class = "RoundContainer">
-        <div class = "MatchRoom RoundOf16">
-
-        </div>
-        <div class = "MatchRoom RoundOf16">
-
-        </div>
-        <div class = "MatchRoom RoundOf16">
-
-        </div>
-        <div class = "MatchRoom RoundOf16">
-
-        </div>
-    </div>
-  </div>
-  <!--<div class="container">
-    <div class="wrapper">
-        <div class="box box1">
-            <div class="topText"> 0 - 0 </div>
-            <div class="nameBox" id = testBox></div>
-        </div>
-    </div>
-    <div class="wrapper">
-        <div class="box box2 top">1 - 0</div>
-        <div class="box box2 bottom">0 - 1</div>
-    </div>
-    <div class="wrapper">
-        <div class="box box3 top"> 2 - 0  Qualified</div>
-        <div class="box box3 middle"> 1 - 1</div>
-        <div class="box box3 bottom"> 0 - 2</div>
-    </div>
-    <div class="wrapper">
-        <div class="box box3 top"> 2 - 1  Qualified</div>
-        <div class="box box3 middle"> 1 - 2</div>
-        <div class="box box3 bottom"> 0 - 3 Eliminated</div>
-    </div>
-    <div class="wrapper">
-        <div class="box box2 top">2 - 2 Qualified</div>
-        <div class="box box2 bottom">1 - 3 Eliminated</div>
-    </div>
-</div>-->
-  <script src="RockPaperScissor.js" type="module"></script>
+    <div class="WinnerDisplay">
+        <div id = "WinnerDisplay" class="Winner">
+            <div> 73</div >
+        </div >
+    </div >
+    <script src="RockPaperScissor.js" type="module"></script>
 </body>
+
 </html>

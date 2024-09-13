@@ -13,117 +13,108 @@ body {
 
 .TournamentField{
     position: absolute;
-    border: 2px solid black;
     top: 35%;
     left: 5%;
     height: 60%;
     width: 90%;
     display: flex;
-    background-color: white;
+    background-color: transparent;
+    justify-content: space-around;
 }
 
-.BorderRight{
-    border-right: 2px solid black;
-}
+
 .RoundContainer{
     height: 100%;
-    width: 12.5%;
+    width: 10%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .FinalContainer{
     height: 100%;
     width: 25%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    overflow: hidden;
 }
 .MatchRoom{
+    background-color: white;
     border: 2px solid black;
     width: 100%;
+    height: 22.5%;
+    position: relative;
 }
-.RoundOf16{
-    height: 25%;
-}
-.RoundOf8{
-    height: 50%;
-}
-.RoundOf4{
-    height: 100%;
+.FinaleBox{
+    border: 2px solid black;
+    width: 25%;
+    position: absolute;
+    top: 30%;
+    height: 40%;
 }
 
-
-
-.container {
-    margin-top: 5%;
-    display: flex;
-    width: 100%;
-    height: 70%;
-    background-color: #ffffff;
-}
-.wrapper {
+.Player{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 2px solid black;
+    z-index: 2;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    left: 0%;
-    top: 0%;
-    width: 20%;
-    height: 100%;
-    padding: 1px;
-    margin-right: 2px;
+    justify-content: space-around;
+    top: 15%;
 }
-.topText{
-    height: 3%;
-    width: 100%;
-    margin: 2px;
+.Left{
+    left: 10%;
 }
-.nameBox{
-    width: 100%;
-    height: 97%;
-    display: flex;
-    flex-wrap: wrap;
-    align-content:space-between;
-    flex-direction:column;
-    padding: 2px;
-    box-sizing: border-box;
+.Right{
+    right: 10%;
+}
+.Vs{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 21%;
+    left: 41%;
+}
+.RPS{
+    top: 60%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: 2;
+}
+.RightPicture{
+    transform: scaleX(-1);
+}
 
+.FinalItem{
+    width: 40px;
+    height: 40px;
 }
-.nameBox p{
-    padding: 0.5px;
-    margin: 0px;
-    font-weight: bold;
-    max-height: 4.2%;
-    min-height: 3.7%;
-    min-width: 45%;
-    max-width: 45%;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 0.7em;
-    text-overflow: ellipsis;
+.FinalItem div{
+    font-size: 1.5em;
 }
-.box{
-    border: 1px solid #333;
+
+.WinnerDisplay{
+    top: 25%;
+    left: 42.5%;
+    width: 15%;
+    height: 15%;
+    position: absolute;
+}
+.Winner{
     width: 100%;
-    padding: 2px;
-}
-.box1{
     height: 100%;
-    padding: 0%;
+    position: relative;
+    border: 2px solid black;
+    z-index: 2;
+    display: none;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
 }
-.box2 {
-    height: 50%;
-    padding: 0%;
-}
-.box3 {
-    height: 33.3333333%;
-    padding: 0%;
-}
-.top{
-    margin-bottom: 1px;
-}
-.middle{
-    margin-top: 1px;
-    margin-bottom: 1px;
-}
-.bottom{
-    margin-top: 1px;
+.Winner div{
+    font-size: 2em;
 }
