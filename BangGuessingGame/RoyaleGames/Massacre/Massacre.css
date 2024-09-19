@@ -1,0 +1,71 @@
+html {
+    min-height:100vh !important;
+    height: 100%;
+}
+body {
+    background-color: #e8f8ff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.OuterScope{
+    z-index: 10;
+    position: absolute;
+    background-color:transparent;
+    border:2px solid red;    
+    height:40px;
+    border-radius:50%;
+    width:40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.ScopeDot{
+    position: relative;
+    background-color:transparent;
+    border:2px solid red;    
+    height:0%;
+    border-radius:50%;
+    width:0%;
+}
+
+.Borders{
+    z-index: -5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+}
+
+.WinCondition{
+    position:relative;
+    z-index: 0;
+    font-size: 45px;
+    font-weight: bold;
+    height: 10%;
+    width: 100%;
+    text-align: center;
+    cursor: default;
+    top: 10%;
+    opacity: 0;
+}
+
+.small-element {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 2px solid black;
+    z-index: 5;
+    text-align: center;
+    cursor: default;
+}
+.Fake{
+    position: relative;
+    z-index: 15;
+    top: 12%;
+}

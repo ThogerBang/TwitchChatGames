@@ -7,7 +7,7 @@ const CounterDown = document.getElementById('CounterDown');
 const FakeText = document.getElementById('FakeText');
 const FakeUser = document.getElementById('FakeUser');
 const MiddleBox = document.getElementById('MiddleBox');
-const SmallBoxes = [document.getElementById('SmallBox1'),document.getElementById('SmallBox2'),document.getElementById('SmallBox3'),document.getElementById('SmallBox4'),document.getElementById('SmallBox6'),document.getElementById('SmallBox7'),document.getElementById('SmallBox8'),document.getElementById('SmallBox9')];
+const SmallBoxes = [document.getElementById('SmallBox1'), document.getElementById('SmallBox2'), document.getElementById('SmallBox3'), document.getElementById('SmallBox4'), document.getElementById('SmallBox6'), document.getElementById('SmallBox7'), document.getElementById('SmallBox8'), document.getElementById('SmallBox9')];
 
 const isInteger = /^-?\d+$/;
 
@@ -15,7 +15,7 @@ const hidingTime = 15;
 const killTime = 2;
 const defaultSpot = 10;
 
-var players =  JSON.parse(localStorage.getItem("players"));
+var players = JSON.parse(localStorage.getItem("players"));
 var isPlaying = true;
 var inHidingphase = true;
 var isKilling = false;
@@ -28,79 +28,83 @@ var found = [];
 var playerBoxes = [];
 var revealed = [];
 
-for (let i = 0; i<players.length; i++){
-  if(players[i].alive){
-    thisPlayers.push({player:players[i],spot:defaultSpot});
-    playerBoxes.push(document.createElement('div')); 
-    playerBoxes[i].classList.add('small-element');
-    const posX = Math.floor(Math.random() * (MiddleBox.clientWidth - 20));
-    const posY = Math.floor(Math.random() * (MiddleBox.clientHeight - 20));
-    playerBoxes[i].style.left = `${posX}px`;
-    playerBoxes[i].style.top = `${posY}px`;
-    playerBoxes[i].style.backgroundColor = thisPlayers[i].player.color;
-    playerBoxes[i].textContent = thisPlayers[i].player.number;
-    MiddleBox.appendChild(playerBoxes[i]);
-    found.push(false);
+for (let i = 0; i < players.length; i++) {
+  if (players[i].alive) {
+    thisPlayers.push({ player: players[i], spot: defaultSpot });
   }
 }
+
+for (let i = 0; i < thisPlayers.length; i++) {
+  playerBoxes.push(document.createElement('div'));
+  playerBoxes[i].classList.add('small-element');
+  const posX = Math.floor(Math.random() * (MiddleBox.clientWidth - 20));
+  const posY = Math.floor(Math.random() * (MiddleBox.clientHeight - 20));
+  playerBoxes[i].style.left = `${posX}px`;
+  playerBoxes[i].style.top = `${posY}px`;
+  playerBoxes[i].style.backgroundColor = thisPlayers[i].player.color;
+  playerBoxes[i].textContent = thisPlayers[i].player.number;
+  MiddleBox.appendChild(playerBoxes[i]);
+  found.push(false);
+}
+
 const myInterval = setInterval(timeAction, 100);
-CounterDown.innerHTML = ""+ hidingTime;
+CounterDown.innerHTML = "" + hidingTime;
 
 socket.addEventListener('open', (event) => {
-    socket.send(`PASS oauth:${oAuth}`);
-    socket.send(`NICK ${nick}`);
-    let channel = sessionStorage.getItem('channel')
-    socket.send(`JOIN #${channel}`);
+  socket.send(`PASS oauth:${oAuth}`);
+  socket.send(`NICK ${nick}`);
+  let channel = sessionStorage.getItem('channel')
+  socket.send(`JOIN #${channel}`);
 });
-  
-socket.addEventListener('message', event =>{
-    if (event.data.includes("PING")) socket.send("PONG");
-    if (event.data.includes("PRIVMSG")) {
-      if (isPlaying){
-        let split = event.data.split(":");
-        let message = split[2];
-        let user = split[1].split("!")[0];
-        handleMessage(user, message);
-      }  
+
+socket.addEventListener('message', event => {
+  if (event.data.includes("PING")) socket.send("PONG");
+  if (event.data.includes("PRIVMSG")) {
+    if (isPlaying) {
+      let split = event.data.split(":");
+      let message = split[2];
+      let user = split[1].split("!")[0];
+      handleMessage(user, message);
     }
+  }
 })
 FakeText.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-      handleMessage(FakeUser.value,FakeText.value)
+    handleMessage(FakeUser.value, FakeText.value)
   }
 });
 FakeUser.addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
-      handleMessage(FakeUser.value,FakeText.value)
+    handleMessage(FakeUser.value, FakeText.value)
   }
 });
 
-for (let i = 0; i < SmallBoxes.length; i++){
+for (let i = 0; i < SmallBoxes.length; i++) {
   const int = i;
-  SmallBoxes[i].addEventListener('click',(event)=>{
+  SmallBoxes[i].addEventListener('click', (event) => {
     boxClicked(int);
   });
 }
 
-function handleMessage(user, message){
-  if(isAlivePlayer(user) && isPlaying && inHidingphase && message.split(" ").length <=1){
+function handleMessage(user, message) {
+  if (isAlivePlayer(user) && isPlaying && inHidingphase && message.split(" ").length <= 1) {
     let play = thisPlayers.find(p => p.player.name === user);
-    if (isInteger.test(message) && !found[play.player.number]){
+    if (isInteger.test(message) && !found[play.player.number]) {
       let integer = (parseInt(message));
-      if (integer>0 && integer <9 && !revealed.includes(integer-1)){
-        play.spot = integer-1;
+      if (integer > 0 && integer < 9 && !revealed.includes(integer - 1)) {
+        play.spot = integer - 1;
         playerBoxes[thisPlayers.indexOf(play)].style.display = "none";
         /*window.requestAnimationFrame(() => {
           playerBoxes[thisPlayers.indexOf(play)].left = "300px";
           playerBoxes[thisPlayers.indexOf(play)].style.top = "200px";
       });*/
-      } 
+      }
     }
-  }  
+  }
 }
 
-function boxClicked(i){
-  if(!inHidingphase && !isKilling &&!revealed.includes(i)){
+function boxClicked(i) {
+  if (!inHidingphase && !isKilling && !revealed.includes(i)) {
     SmallBoxes[i].children[0].style.display = "none";
     revealed.push(i);
     revealBox(i);
@@ -109,9 +113,9 @@ function boxClicked(i){
   }
 }
 
-function revealBox(j){
-  for (let i = 0; i<thisPlayers.length; i++){
-    if(thisPlayers[i].spot === j){
+function revealBox(j) {
+  for (let i = 0; i < thisPlayers.length; i++) {
+    if (thisPlayers[i].spot === j) {
       let rect = SmallBoxes[j].getBoundingClientRect();
       playerBoxes[i].style.display = "block";
       //const posY = rect.top - (SmallBoxes[j].clientHeight/2) + 10;
@@ -122,7 +126,7 @@ function revealBox(j){
       SmallBoxes[j].appendChild(playerBoxes[i]);
       found[i] = true;
     }
-    if(thisPlayers[i].spot === defaultSpot){
+    if (thisPlayers[i].spot === defaultSpot) {
       playerBoxes[i].style.display = "none";
       found[i] = true;
     }
@@ -130,40 +134,40 @@ function revealBox(j){
 }
 
 
-function endGame(){
+function endGame() {
   isPlaying = false;
   let eliminated = [];
-  for(let i = 0; i < thisPlayers.length; i++){
-    if(found[i]){
+  for (let i = 0; i < thisPlayers.length; i++) {
+    if (found[i]) {
       eliminated.push(thisPlayers[i].player);
     }
   }
-  localStorage.setItem("eliminated",JSON.stringify(eliminated));
+  localStorage.setItem("eliminated", JSON.stringify(eliminated));
   window.location.href = "../../GameSelector.html";
 }
 
-function isAlivePlayer(user){
+function isAlivePlayer(user) {
   return thisPlayers.some(p => p.player.name === user);
 }
 
-function countDownAction(){
-  if(inHidingphase){
+function countDownAction() {
+  if (inHidingphase) {
     endHidingPhase();
   }
-  else if(isKilling){
+  else if (isKilling) {
     endKillingPhase();
   }
 }
 
-function endKillingPhase(){
-  if (revealed.length >= 3){
+function endKillingPhase() {
+  if (revealed.length >= 3) {
     endGame();
-  }else{
+  } else {
     inHidingphase = true;
     countdown = hidingTime;
   }
-  for (let i = 0; i<thisPlayers.length; i++){
-    if(!found[i]){
+  for (let i = 0; i < thisPlayers.length; i++) {
+    if (!found[i]) {
       playerBoxes[i].style.display = "block";
       //const posY = rect.top - (SmallBoxes[j].clientHeight/2) + 10;
       const posX = Math.floor(Math.random() * (MiddleBox.clientWidth - 20));
@@ -176,11 +180,11 @@ function endKillingPhase(){
   }
 }
 
-function endHidingPhase(){
+function endHidingPhase() {
   inHidingphase = false;
   isKilling = false;
-  for (let i = 0; i<thisPlayers.length; i++){
-    if(thisPlayers[i].spot === defaultSpot){
+  for (let i = 0; i < thisPlayers.length; i++) {
+    if (thisPlayers[i].spot === defaultSpot) {
       playerBoxes[i].style.display = "none";
       found[i] = true;
     }
@@ -188,19 +192,19 @@ function endHidingPhase(){
 }
 
 
-function timeAction(){
-  if (isPlaying){
-    if (inHidingphase || isKilling){
+function timeAction() {
+  if (isPlaying) {
+    if (inHidingphase || isKilling) {
       counter++;
-      if(counter>10){
-          countdown--;
-          if (inHidingphase){
-            CounterDown.innerHTML = countdown;
-          }
-          if(countdown <= 0){
-            countDownAction();
-          }
-          counter = 0;
+      if (counter > 10) {
+        countdown--;
+        if (inHidingphase) {
+          CounterDown.innerHTML = countdown;
+        }
+        if (countdown <= 0) {
+          countDownAction();
+        }
+        counter = 0;
       }
     }
   }
