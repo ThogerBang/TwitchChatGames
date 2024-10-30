@@ -1,0 +1,54 @@
+html {
+    min-height:100vh !important;
+    height: 100%;
+}
+body {
+    background-color: #e8f8ff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.PlayerBox{
+    position: absolute;
+    left: 5%;
+    top: 20%;
+    height: 70%;
+    width: 90%;
+}
+.Player{
+    height: 45%;
+    width: 18%;
+    display: flex;
+    flex-direction: column;
+}
+.PictureBox{
+    border: solid black 2px;
+    height: 65%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: teal;
+    font-weight: bold;
+}
+.PictureBox div{
+    font-size: 1.5em;
+    text-align: center;
+}
+.NameBox{
+    font-weight: bold;
+    border: solid black 2px;
+    height: 15%;
+    width: 100%;
+    text-align: center;
+    border-bottom: none;
+}
+.Subtitles{
+    border: solid black 2px;
+    border-top: none;
+    height: 30%;
+    width: 100%;
+    font-size: clamp(8px, 2vw, 20px);
+}

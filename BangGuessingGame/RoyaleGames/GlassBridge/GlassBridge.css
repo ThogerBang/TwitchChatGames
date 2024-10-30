@@ -1,0 +1,12 @@
+html {
+    min-height:100vh !important;
+    height: 100%;
+}
+body {
+    background-color: #e8f8ff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
